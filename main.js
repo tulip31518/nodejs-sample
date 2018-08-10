@@ -62,5 +62,33 @@ if(result < 0) {
    console.log(buffer1 +" comes after " + buffer2);
 }
 
+//Stream
+var data = "Simply Easy Learning";
+var writeStream = fs.createWriteStream('output.txt');
+writeStream.write(data, 'UTF8');
+writeStream.end();
+
+writeStream.on('finish', function()
+{
+    console.log('WriteStream ended.');
+});
+
+writeStream.on('error', function(data, err)
+{
+    console.log('error', err.stack);
+});
+
+var readerStream = fs.createReadStream('input.txt');
+var writerStream = fs.createWriteStream('output.txt');
+readerStream.pipe(writerStream);
+
+console.log('writing ended.');
+
+var zlib = require('zlib');
+fs.createReadStream('input.txt')
+    .pipe(zlib.createGzip())
+    .pipe(fs.createWriteStream('input.txt.gz'));
+
+
  // Console will print the message
  console.log('Server running at http://127.0.0.1:8081/');
