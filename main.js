@@ -15,5 +15,26 @@ var data = fs.readFileSync('input.txt');
 
 console.log(data.toString());
 console.log("Program Ended");
+
+var events = require('events');
+var eventEmitter = new events.EventEmitter();
+
+var connectHandler = function connected()
+{
+    console.log('connection succesful.');
+  
+   // Fire the data_received event 
+   eventEmitter.emit('data_received');
+}
+
+eventEmitter.on('connected', connectHandler);
+eventEmitter.on('data_received', function()
+{
+    console.log('data received successfully.')
+});
+
+eventEmitter.emit('connection');
+console.log('Program ended');
+
  // Console will print the message
  console.log('Server running at http://127.0.0.1:8081/');
