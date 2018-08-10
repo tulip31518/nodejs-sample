@@ -49,5 +49,18 @@ console.log(eventListeners + " Listner(s) listening to connection event");
 
 console.log('Program ended');
 
+//Buffer Test
+var buffer1 = new Buffer('ABC');
+var buffer2 = new Buffer('ABCD');
+var result = buffer1.compare(buffer2);
+
+if(result < 0) {
+   console.log(buffer1 +" comes before " + buffer2);
+}else if(result == 0){
+   console.log(buffer1 +" is same as " + buffer2);
+}else {
+   console.log(buffer1 +" comes after " + buffer2);
+}
+
  // Console will print the message
  console.log('Server running at http://127.0.0.1:8081/');
