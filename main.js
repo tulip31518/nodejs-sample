@@ -100,5 +100,18 @@ fs.stat('input.txt', function(err, stats)
     console.log(stats.isDirectory());
 })
 
+var buffer = new Buffer(1024);
+fs.open('input.txt', 'r+', function(err, fd)
+{
+    if(err)
+        return console.error(err);
+    fs.read(fd, buffer, 0, buffer.length, 0, function(err, bytes)
+    {
+        if(err)
+            console.log(err);
+        if(bytes > 0)
+            console.log("Read buffer:" + buffer.slice(0, bytes).toString());
+    });
+});
  // Console will print the message
  console.log('Server running at http://127.0.0.1:8081/');
