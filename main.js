@@ -105,13 +105,45 @@ fs.open('input.txt', 'r+', function(err, fd)
 {
     if(err)
         return console.error(err);
-    fs.read(fd, buffer, 0, buffer.length, 0, function(err, bytes)
+    fs.ftruncate(fd, 10, function(err)
     {
         if(err)
-            console.log(err);
-        if(bytes > 0)
-            console.log("Read buffer:" + buffer.slice(0, bytes).toString());
+            console.error(err);
+        console.log("succefully Truncated.");
+
+        fs.read(fd, buffer, 0, buffer.length, 0, function(err, bytes)
+            {
+                if(err)
+                    console.log(err);
+                if(bytes > 0)
+                    console.log("Read buffer:" + buffer.slice(0, bytes).toString());
+                fs.close(fd, function(err){
+                        if (err){
+                           console.log(err);
+                        } 
+                        console.log("File closed successfully.");
+                });
+            });
     });
+    
 });
+
+var os = require("os");
+
+// Endianness
+console.log('endianness : ' + os.endianness());
+
+// OS type
+console.log('type : ' + os.type());
+
+// OS platform
+console.log('platform : ' + os.platform());
+
+// Total system memory
+console.log('total memory : ' + os.totalmem() + " bytes.");
+
+// Total free memory
+console.log('free memory : ' + os.freemem() + " bytes.");
+
  // Console will print the message
  console.log('Server running at http://127.0.0.1:8081/');
