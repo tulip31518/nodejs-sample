@@ -89,6 +89,16 @@ fs.createReadStream('input.txt')
     .pipe(zlib.createGzip())
     .pipe(fs.createWriteStream('input.txt.gz'));
 
+fs.stat('input.txt', function(err, stats)
+{
+    if(err)
+        console.error(err);
+    console.log(stats);
+    console.log('Got File Information successfully.');
+
+    console.log(stats.isFile());
+    console.log(stats.isDirectory());
+})
 
  // Console will print the message
  console.log('Server running at http://127.0.0.1:8081/');
