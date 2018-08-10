@@ -11,29 +11,42 @@ http.createServer(function (request, response) {
  
  var fs = require("fs");
 
-var data = fs.readFileSync('input.txt');
+ fs.readFile('input.txt', function (err, data) {
+    if (err){
+       console.log(err.stack);
+       return;
+    }
+    console.log(data.toString());
+ });
 
-console.log(data.toString());
 console.log("Program Ended");
 
 var events = require('events');
 var eventEmitter = new events.EventEmitter();
 
-var connectHandler = function connected()
+var listener1 = function listener1()
 {
-    console.log('connection succesful.');
-  
-   // Fire the data_received event 
-   eventEmitter.emit('data_received');
+    console.log('listener1 excuted.');
 }
 
-eventEmitter.on('connection', connectHandler);
-eventEmitter.on('data_received', function()
+var listener2 = function listener2()
 {
-    console.log('data received successfully.')
-});
+    console.log('listener2 excuted.');
+}
+
+eventEmitter.addListener('connection', listener1);
+eventEmitter.on('connection', listener2);
+
+var eventListeners = require('events').EventEmitter.listenerCount
+   (eventEmitter,'connection');
+console.log(eventListeners + ': Listner(s) listening to connection event');
 
 eventEmitter.emit('connection');
+
+eventEmitter.removeListener('connection', listener1);
+eventListeners = require('events').EventEmitter.listenerCount(eventEmitter,'connection');
+console.log(eventListeners + " Listner(s) listening to connection event");
+
 console.log('Program ended');
 
  // Console will print the message
