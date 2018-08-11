@@ -5,7 +5,7 @@ var url = require('url');
 // Create a server
 http.createServer( function (request, response) {  
    // Parse the request containing file name
-   var pathname = url.parse("http://127.0.0.1:8081/index.htm").pathname;
+   var pathname = url.parse("http://127.0.0.1:8081/public/index.htm").pathname;
    
    // Print the name of the file for which request is made.
    console.log("Request for " + pathname + " received.");
